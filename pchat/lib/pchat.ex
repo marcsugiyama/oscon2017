@@ -14,6 +14,7 @@ defmodule Pchat do
       supervisor(Pchat.Endpoint, []),
       # Start your own worker by calling: Pchat.Worker.start_link(arg1, arg2, arg3)
       # worker(Pchat.Worker, [arg1, arg2, arg3]),
+      worker(Pchat.PostHandler, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

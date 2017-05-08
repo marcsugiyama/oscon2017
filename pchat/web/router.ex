@@ -19,8 +19,8 @@ defmodule Pchat.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Pchat do
-  #   pipe_through :api
-  # end
+  scope "/api", Pchat do
+    pipe_through :api
+    resources "/post", PostController
+  end
 end
