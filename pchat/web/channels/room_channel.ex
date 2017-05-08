@@ -11,7 +11,11 @@ defmodule Pchat.RoomChannel do
   end
 
   def handle_in("new:msg", payload, socket) do
-    broadcast! socket, "new:msg", %{user: payload["user"], body: payload["body"]}
+    user = payload["user"]
+    body = payload["body"]
+    changeset = Pchat.Msg.changeset(%Pchat.Msg{}, %{who: user, msg: body})
+    {:ok, _} = Repo.insert(changeset)
+    broadcast! socket, "new:msg", %{user: user, body: body}
     {:noreply, socket}
   end
 
