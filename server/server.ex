@@ -1,15 +1,16 @@
 defmodule Server do
 
 def start() do
-    Process.spawn(Server, :loop, [0], [])
+    pid = Process.spawn(Server, :loop, [0], [])
+    Process.register(pid, :server)
 end
 
-def add(pid, incr) do
-    send pid, {:incr, incr}
+def add(incr) do
+    send :server, {:incr, incr}
 end
 
-def get(pid) do
-    send pid, {:get, self()}
+def get() do
+    send :server, {:get, self()}
     receive do
         {:count, count} ->
             count
